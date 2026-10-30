@@ -1,0 +1,21 @@
+{
+  "provider": "Tiny Tapeout",
+  "reviewed_date": "2026-10-30",
+  "target_shuttle": "ttsky26d",
+  "pdk": "sky130A",
+  "official_flow_version_at_review": "3.0.14",
+  "template_url": "https://github.com/TinyTapeout/ttsky-verilog-template.git",
+  "template_commit": "a42e6662fab316e93b4e26399e21d41664a460b7",
+  "support_tools_url": "https://github.com/TinyTapeout/tt-support-tools.git",
+  "support_tools_commit_reviewed": "b7b993ac507a3d0dd9c2c82c213ff6fab7d6dacc",
+  "ports": {
+    "ui_in": ["input", 8], "uo_out": ["output", 8],
+    "uio_in": ["input", 8], "uio_out": ["output", 8], "uio_oe": ["output", 8],
+    "ena": ["input", 1], "clk": ["input", 1], "rst_n": ["input", 1]
+  },
+  "tiles": ["1x1", "1x2", "2x2", "3x2", "4x2", "6x2", "8x2"],
+  "pricing": "https://app.tinytapeout.com/calculator",
+  "shuttles": "https://tinytapeout.com/chips/",
+  "local_hardening": "https://tinytapeout.com/guides/local-hardening/",
+  "scope": "RTL interface preparation and official-template handoff only. Not official precheck, booking, payment or acceptance."
+}

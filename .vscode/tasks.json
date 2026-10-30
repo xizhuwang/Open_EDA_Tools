@@ -1,0 +1,10 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {"label": "EDA: Desktop UI", "type": "process", "command": "bash", "args": ["eda", "gui"], "problemMatcher": []},
+    {"label": "EDA: Simulate", "type": "process", "command": "bash", "args": ["eda", "run", "sim"], "group": "test", "problemMatcher": []},
+    {"label": "EDA: Lint", "type": "process", "command": "bash", "args": ["eda", "run", "lint"], "problemMatcher": []},
+    {"label": "EDA: STA", "type": "process", "command": "bash", "args": ["eda", "run", "sta"], "problemMatcher": []},
+    {"label": "EDA: RTL to GDS + DRC LVS", "type": "process", "command": "bash", "args": ["eda", "run", "verify"], "group": "build", "problemMatcher": []}
+  ]
+}

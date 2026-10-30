@@ -1,0 +1,48 @@
+name: WSL-compatible native toolchain
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      physical:
+        description: Run full SKY130 RTL to GDS, DRC and LVS (large download)
+        type: boolean
+        default: true
+permissions:
+  contents: read
+jobs:
+  unit:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - run: bash eda unit-test
+      - run: python3 -m compileall -q edaworkbench scripts tests
+  toolchain:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install GUI namespace prerequisites
+        run: sudo apt-get update && sudo apt-get install -y uidmap xvfb python3-tk
+      - name: Extract pinned portable environment
+        run: bash eda setup
+      - run: bash eda test
+      - name: Native UI lifecycle check
+        run: xvfb-run -a .tools/x86_64/squashfs-root/AppRun python3 scripts/gui_smoke.py
+      - name: Actual RTL to GDS with physical verification
+        if: inputs.physical
+        run: bash eda run verify --jobs 2 --timeout 3600
+      - name: Physical acceptance gate
+        if: inputs.physical
+        run: python3 scripts/check_physical.py examples/counter/project.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: tool-validation-reports
+          include-hidden-files: true
+          path: |
+            examples/counter/.runs/**/manifest.json
+            examples/counter/.runs/**/summary.json
+            examples/counter/.runs/**/console.log
+            examples/counter/.runs/**/*.rpt

@@ -1,0 +1,11 @@
+.tools/
+.pdks/
+.runs/
+**/.runs/
+__pycache__/
+*.pyc
+.venv/
+*.vcd
+*.fst
+.eda-lock
+.exports/

@@ -1,0 +1,13 @@
+{
+  "name": "Tiny Tapeout counter — interface preparation",
+  "top": "tt_um_openeda_counter",
+  "testbench_top": "tb",
+  "clock": "clk",
+  "clock_period_ns": 20.0,
+  "rtl": ["rtl/project.v"],
+  "testbench": ["tb/tb.v"],
+  "sdc": "constraints.sdc",
+  "pdk": "sky130A",
+  "scl": "sky130_fd_sc_hd",
+  "tapeout": {"provider": "tinytapeout", "tiles": "1x1", "target": "ttsky26d"}
+}

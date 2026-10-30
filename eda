@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+set -euo pipefail
+EDA_ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+export EDA_ROOT
+if [[ "${1:-}" == "setup" ]]; then
+  shift
+  exec python3 "$EDA_ROOT/scripts/setup.py" "$@"
+fi
+if [[ "${EDA_ENV_ACTIVE:-}" == "1" ]]; then
+  exec python3 "$EDA_ROOT/eda.py" "$@"
+fi
+if [[ "${1:-}" == "unit-test" ]]; then
+  exec python3 -m unittest discover -s "$EDA_ROOT/tests" -p 'test_*.py' -v
+fi
+if [[ "${EDA_USE_SYSTEM_TOOLS:-}" == "1" ]]; then
+  export EDA_ENV_ACTIVE=1
+  exec python3 "$EDA_ROOT/eda.py" "$@"
+fi
+EDA_APP="${EDA_APP_RUN:-$EDA_ROOT/.tools/$(uname -m)/squashfs-root/AppRun}"
+if [[ ! -x "$EDA_APP" ]]; then
+  echo 'Toolchain missing. Run: bash eda setup' >&2
+  exit 2
+fi
+export EDA_ENV_ACTIVE=1
+export PDK_ROOT="${PDK_ROOT:-$EDA_ROOT/.pdks}"
+# Software rendering is more reliable for Qt/OpenGL over WSLg.
+export QT_XCB_GL_INTEGRATION=none
+export LIBGL_ALWAYS_SOFTWARE=1
+exec "$EDA_APP" python3 "$EDA_ROOT/eda.py" "$@"

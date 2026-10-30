@@ -1,0 +1,15 @@
+{
+  "distribution": "LibreLane",
+  "version": "3.0.17",
+  "release": "https://github.com/librelane/librelane/releases/tag/3.0.17",
+  "assets": {
+    "x86_64": {
+      "filename": "librelane-devshell-x86_64.AppImage",
+      "sha256": "c8ef5ae26b1fc53dd1dd30fe2f1a1da6ab0fdf471dd5a94c2b85d2b3db36833c"
+    },
+    "aarch64": {
+      "filename": "librelane-devshell-aarch64.AppImage",
+      "sha256": "902311ed81828b8b5c64a8759b718c1df62f64c2936bee7e6c800b99c25a5b34"
+    }
+  }
+}

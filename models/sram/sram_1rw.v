@@ -1,0 +1,26 @@
+// Original behavioral model. Read-first, 1-cycle synchronous read, byte enables.
+`default_nettype none
+module sram_1rw #(
+    parameter ADDR_WIDTH = 6,
+    parameter DATA_WIDTH = 32
+) (
+    input wire clk,
+    input wire en,
+    input wire we,
+    input wire [DATA_WIDTH/8-1:0] byte_en,
+    input wire [ADDR_WIDTH-1:0] addr,
+    input wire [DATA_WIDTH-1:0] wdata,
+    output reg [DATA_WIDTH-1:0] rdata
+);
+    reg [DATA_WIDTH-1:0] mem [0:(1<<ADDR_WIDTH)-1];
+    integer b;
+    always @(posedge clk) begin
+        if (en) begin
+            rdata <= mem[addr];
+            if (we)
+                for (b = 0; b < DATA_WIDTH/8; b = b + 1)
+                    if (byte_en[b]) mem[addr][b*8 +: 8] <= wdata[b*8 +: 8];
+        end
+    end
+endmodule
+`default_nettype wire

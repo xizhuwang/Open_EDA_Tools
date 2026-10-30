@@ -1,0 +1,12 @@
+{
+  "name": "Counter — RTL to GDS",
+  "top": "counter",
+  "testbench_top": "tb",
+  "clock": "clk",
+  "clock_period_ns": 20.0,
+  "rtl": ["rtl/counter.v"],
+  "testbench": ["tb/tb.v"],
+  "sdc": "constraints.sdc",
+  "pdk": "sky130A",
+  "scl": "sky130_fd_sc_hd"
+}
